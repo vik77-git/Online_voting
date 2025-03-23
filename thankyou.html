@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results Coming Soon</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('vote4.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4a90e2;
+        }
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+        }
+        .loading-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .loading {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ddd;
+            border-top: 5px solid #4a90e2;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ff4a4a;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #d43a3a;
+        }
+        .footer-container {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.9); /* Light background */
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on top */
+        }
+
+        .footer p {
+            margin: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .footer a {
+            color: rgb(1, 132, 255);
+            text-decoration: none;
+        }
+        #profile-photo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        /* Google Translate Styling */
+        #google_translate_element {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+<div id="google_translate_element"></div>
+
+<!-- Google Translate Script with Restricted Indian Languages -->
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,kn,ml,mr,pa,ta,te,bn,gu,or,as,ur,mai', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element'
+        );
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <img src="photo.png" alt="Profile Photo" id="profile-photo">
+    <div class="container">
+        <h1>Election Results</h1>
+        <p>The results will be announced soon. Stay tuned!</p>
+        <div class="loading-container">
+            <div class="loading"></div>
+        </div>
+        <center><button class="btn" onclick="logout()">Logout</button></center>
+        
+    </div>
+    <div class="footer-container">
+        <div class="footer">
+            <p>© Online Voting System</p>
+            <p>Contact: <a href="mailto:officialmail@gmail.com">Email</a> us</p>
+        </div>
+    </div>
+    <!-- Google Translate Script -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        function logout() {
+            Swal.fire({
+                icon: "success",
+                title: "Logged Out",
+                text: "You have been successfully logged out.",
+                timer: 2000,
+                showConfirmButton: false
+            });
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

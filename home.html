@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('vote3.png') no-repeat center center fixed;
+            background-size: cover; /* Ensure the image covers the full screen */
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.9); /* Add slight transparency */
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #4a90e2;
+        }
+        .btn {
+            padding: 12px 20px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .btn:hover {
+            background-color: #357ab7;
+        }
+        .footer-container {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.9); /* Light background */
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on top */
+        }
+
+        .footer p {
+            margin: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .footer a {
+            color: rgb(1, 132, 255);
+            text-decoration: none;
+        }
+        /* Google Translate Styling */
+        #google_translate_element {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+<div id="google_translate_element"></div>
+
+<!-- Google Translate Script with Restricted Indian Languages -->
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,kn,ml,mr,pa,ta,te,bn,gu,or,as,ur,mai', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element'
+        );
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <div class="container">
+        <h1>Welcome for Online Voting</h1>
+        <p>This operation is undertaken to ensure 100% vote-casting and ease the voting via website.</p>
+        <p>Login through your Aadhaar and verify your identity for voting.</p>
+        <p>After successful verification, you are allowed to vote for your candidate</p>
+        <button class="btn" onclick="proceed()">Proceed</button>
+    </div>
+    <div class="footer-container">
+        <div class="footer">
+            <p>© Online Voting System</p>
+            <p>Contact: <a href="mailto:officialmail@gmail.com">Email</a> us</p>
+        </div>
+    </div>
+    <!-- Google Translate Script -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        function proceed() {
+            window.location.href = "index.html";
+        }
+    </script>
+</body>
+</html>

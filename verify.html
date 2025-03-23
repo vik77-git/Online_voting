@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Identity</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('vote4.jpg') no-repeat center center fixed;
+            background-size: cover; /* Ensure the image covers the full screen */
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            color: #4a90e2;
+        }
+        .file-input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #357ab7;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer-container {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.9); /* Light background */
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Subtle shadow on top */
+        }
+
+        .footer p {
+            margin: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+
+        .footer a {
+            color: rgb(1, 132, 255);
+            text-decoration: none;
+        }
+        #profile-photo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        /* Google Translate Styling */
+        #google_translate_element {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+<div id="google_translate_element"></div>
+
+<!-- Google Translate Script with Restricted Indian Languages -->
+<script>
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+            {
+                pageLanguage: 'en',
+                includedLanguages: 'en,hi,kn,ml,mr,pa,ta,te,bn,gu,or,as,ur,mai', 
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            },
+            'google_translate_element'
+        );
+    }
+</script>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <img src="photo.png" alt="Profile Photo" id="profile-photo">
+    <div class="container">
+        <h2>Verify Voting Eligibility</h2>
+        <p>Upload your Driving License or PAN card or Voter ID for verification.</p>
+        <label for="document-type" style="display: block; margin-bottom: 5px;">Select Document Type:</label>
+        <select id="document-type" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+            <option value="pan">PAN Card</option>
+            <option value="voter">Voter ID</option>
+            <option value="dl">Driving License</option>
+        </select>
+        <input type="file" id="document-upload" class="file-input" accept="image/*,application/pdf">
+        <button type="button" id="verify-document" class="btn">Verify Document</button>
+    </div>
+
+    <div class="footer-container">
+        <div class="footer">
+            <p>© Online Voting System</p>
+            <p>Contact: <a href="mailto:officialmail@gmail.com">Email</a> us</p>
+        </div>
+    </div>
+    <!-- Google Translate Script -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        document.getElementById("verify-document").addEventListener("click", function() {
+            const fileInput = document.getElementById("document-upload");
+            
+            if (fileInput.files.length === 0) {
+                Swal.fire({
+                    icon: "error",
+                    title: "No File Uploaded",
+                    text: "Please upload your Driving License or PAN card for verification.",
+                });
+                return;
+            }
+
+            Swal.fire({
+                title: "Verifying Document...",
+                text: "Please wait while we check your eligibility.",
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            // Simulate verification process
+            setTimeout(() => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Verification Successful",
+                    text: "Your document has been verified. You are eligible to vote!",
+                    confirmButtonText: "Proceed to Vote"
+                }).then(() => {
+                    window.location.href = "vote.html"; // Redirect to voting page
+                });
+            }, 5000); // 5-second verification delay
+        });
+    </script>
+</body>
+</html>
+
+

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aadhaar OTP Login</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('vote2.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+            position: relative;
+        }
+        h2 { color: #4a90e2; }
+        input { width: 90%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; }
+        .btn {
+            width: 100%; padding: 12px; background-color: #4a90e2; color: white;
+            border: none; border-radius: 5px; font-size: 16px; cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover { background-color: #357ab7; }
+        .hidden { display: none; }
+        #countdown { color: red; font-weight: bold; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Aadhaar OTP Login</h2>
+        <form id="aadhaar-form">
+            <input type="text" id="aadhaar-number" placeholder="Enter Aadhaar Number" maxlength="12" required>
+            <button type="button" id="send-otp" class="btn">Send OTP</button>
+        </form>
+        
+        <form id="otp-form" class="hidden">
+            <input type="text" id="otp" placeholder="Enter OTP" maxlength="6" required>
+            <button type="button" id="verify-otp" class="btn">Verify OTP</button>
+            <p id="countdown" class="hidden"></p>
+        </form>
+
+        <button type="button" id="proceed-btn" class="btn hidden">Proceed to Biometric Verification</button>
+    </div>
+
+    <script>
+        let generatedOTP = null;
+        let countdownTimer;
+
+        document.getElementById("send-otp").addEventListener("click", async function() {
+    const aadhaarNumber = document.getElementById("aadhaar-number").value;
+
+    if (aadhaarNumber.length !== 12 || isNaN(aadhaarNumber)) {
+        Swal.fire({ icon: "error", title: "Invalid Aadhaar", text: "Enter a valid 12-digit Aadhaar number." });
+        return;
+    }
+
+    try {
+        let response = await fetch("/send-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ aadhaarNumber }),
+        });
+        let data = await response.json();
+
+        if (data.success) {
+            Swal.fire({ icon: "info", title: "OTP Sent!", text: "Check your mobile for the OTP." });
+            document.getElementById("aadhaar-form").classList.add("hidden");
+            document.getElementById("otp-form").classList.remove("hidden");
+            startCountdown();
+        } else {
+            Swal.fire({ icon: "error", title: "Aadhaar Not Found", text: data.message });
+        }
+    } catch (error) {
+        Swal.fire({ icon: "error", title: "Error", text: "Something went wrong. Try again!" });
+    }
+});
+
+function startCountdown() {
+    let timeLeft = 30;
+    const countdownElement = document.getElementById("countdown");
+    countdownElement.classList.remove("hidden");
+
+    countdownTimer = setInterval(() => {
+        if (timeLeft > 0) {
+            countdownElement.innerText = `OTP expires in ${timeLeft} seconds`;
+            timeLeft--;
+        } else {
+            clearInterval(countdownTimer);
+            countdownElement.innerText = "OTP expired. Please request a new one.";
+        }
+    }, 1000);
+}
+
+document.getElementById("verify-otp").addEventListener("click", async function() {
+    const otp = document.getElementById("otp").value;
+
+    if (otp.length !== 6 || isNaN(otp)) {
+        Swal.fire({ icon: "error", title: "Invalid OTP", text: "Enter a valid 6-digit OTP." });
+        return;
+    }
+
+    try {
+        let response = await fetch("/verify-otp", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ otp }),
+        });
+        let data = await response.json();
+
+        if (data.success) {
+            Swal.fire({ icon: "success", title: "Login Successful", text: "Proceed to biometric verification." }).then(() => {
+                document.getElementById("proceed-btn").classList.remove("hidden");
+            });
+        } else {
+            Swal.fire({ icon: "error", title: "Invalid OTP", text: data.message });
+        }
+    } catch (error) {
+        Swal.fire({ icon: "error", title: "Error", text: "Something went wrong. Try again!" });
+    }
+});
+
+document.getElementById("proceed-btn").addEventListener("click", function() {
+    window.location.href = "biometric.html";
+});
+
+    </script>
+
+</body>
+</html>

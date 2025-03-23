@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biometric Verification</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('vote2.png') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .home-link {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 18px;
+            text-decoration: none;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+        .home-link:hover {
+            color: #357ab7;
+        }
+        .container {
+            background: #fff;
+            padding: 30px 40px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 350px;
+        }
+        h2 {
+            color: #4a90e2;
+        }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            background-color: #357ab7;
+        }
+        .fingerprint {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+        }
+        .footer-container {
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 10px 0;
+            text-align: center;
+            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .footer p {
+            margin: 5px;
+            font-size: 14px;
+            color: #555;
+        }
+        .footer a {
+            color: rgb(1, 132, 255);
+            text-decoration: none;
+        }
+        #profile-photo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid #fff;
+        }
+        #google_translate_element {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Google Translate Dropdown -->
+    <div id="google_translate_element"></div>
+    
+    <!-- Google Translate Script -->
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                {
+                    pageLanguage: 'en',
+                    includedLanguages: 'en,hi,kn,ml,mr,pa,ta,te,bn,gu,or,as,ur,mai', 
+                    layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+                },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <img src="photo.png" alt="Profile Photo" id="profile-photo">
+    <a href="index.html" class="home-link">Home</a>
+
+    <div class="container">
+        <h2>Biometric Verification</h2>
+        <img src="fgr1.png" class="fingerprint" alt="Fingerprint Icon">
+        <button type="button" id="verify-biometrics" class="btn">Verify Biometric</button>
+    </div>
+
+    <div class="footer-container">
+        <div class="footer">
+            <p>© Online Voting System</p>
+            <p>Contact: <a href="mailto:officialmail@gmail.com">Email</a> us</p>
+        </div>
+    </div>
+
+    <script>
+        let biometricAttempt = 0; // Track attempts
+
+        document.getElementById("verify-biometrics").addEventListener("click", async function() {
+            if (!window.PublicKeyCredential) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Biometric Not Supported",
+                    text: "Your browser does not support WebAuthn for biometric authentication."
+                });
+                return;
+            }
+
+            if (biometricAttempt === 0) {
+                // First attempt - Show scanning message
+                Swal.fire({
+                    title: "Scanning Fingerprint...",
+                    text: "Please scan your Index or Thumb finger.",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                setTimeout(() => {
+                    Swal.fire({
+                        icon: "warning",
+                        title: "Please place your finger properly.",
+                        text: "Try again.",
+                        confirmButtonText: "OK"
+                    });
+                    biometricAttempt++; // Increase attempt count
+                }, 3000); // Show warning after 3s
+            } else {
+                // Second attempt - Successful verification
+                Swal.fire({
+                    title: "Scanning Fingerprint...",
+                    text: "Please scan your Index or Thumb finger.",
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
+                });
+
+                // Simulating biometric verification (8 seconds)
+                setTimeout(() => {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Verification unsuccessful",
+                        text: "Biometric authentication completed with errors.",
+                        confirmButtonText: "Proceed"
+                    }).then(() => {
+                        window.location.href = "biometric.html"; // Redirect to verify.html
+                    });
+                }, 8000); // 8s delay for scanning simulation
+            }
+        });
+    </script>
+</body>
+</html>
